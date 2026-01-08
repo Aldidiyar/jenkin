@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/твой_ник/selenium-jenkins-demo.git'
+                git branch: 'main', url: 'https://github.com/Aldidiyar/jenkin.git'
             }
         }
 
