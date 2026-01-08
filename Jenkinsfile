@@ -2,26 +2,26 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven3'
         jdk 'Java11'
+        maven 'Maven3'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Aldidiyar/jenkin.git'
+                checkout scm
             }
         }
 
         stage('Build & Test') {
             steps {
-                bat 'mvn clean test'
+                sh 'mvn clean test'
             }
         }
 
-        stage('Results') {
+        stage('Publish results') {
             steps {
-                junit '**/target/surefire-reports/*.xml'
+                junit 'target/surefire-reports/*.xml'
             }
         }
     }
