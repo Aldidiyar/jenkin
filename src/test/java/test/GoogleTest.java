@@ -1,6 +1,5 @@
 package test;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
@@ -14,16 +13,17 @@ public class GoogleTest {
 
     @BeforeMethod
     public void setUp() {
-        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
     }
 
     @Test
-    public void openGoogleTest() {
+    public void openGooglTest() {
         driver.get("https://www.google.com");
         String title = driver.getTitle();
-        Assert.assertTrue(title.contains("Google"), "Title does not contain Google");
+        Steps steps = new Steps();
+        steps.step(title);
+        steps.step2(title);
     }
 
     @AfterMethod
