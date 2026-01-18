@@ -21,9 +21,7 @@ public class GoogleTest {
     public void openGooglTest() {
         driver.get("https://www.google.com");
         String title = driver.getTitle();
-        Steps steps = new Steps();
-        steps.step(title);
-        steps.step2(title);
+        Assert.assertTrue(title.contains("Google"), "Title does not contain Google");
     }
 
     @AfterMethod
