@@ -1,0 +1,31 @@
+pipeline {
+	agent any
+	parameters {
+	    booleanParam(name 'RUN_TESTS', defaultValue 'true')
+	}
+	stages {
+		stage ('Build') {
+		    steps {
+        		    echo 'build'
+                }
+	    }
+		stage ('Test') {
+		    when {
+		        expression {
+		            return params.RUN_TESTS
+		        }
+		    }
+		    steps {
+        		    echo 'test'
+                }
+        }
+        stage ('Deploy') {
+            when {
+                branch 'main'
+            }
+        	steps {
+                	echo 'deploy'
+                }
+        }
+    }
+}

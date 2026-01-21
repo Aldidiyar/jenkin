@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+    stages {
+        stage('archive') {
+            steps {
+                bat 'echo 'artefact' > out/app.txt'
+                archiveArtifacts archive: 'out/..'
+            }
+        }
+    }
+}
+
+pipeline {
+    agent any
+    stages {
+            stage('unArchive') {
+                steps {
+                    copyArtefacts(
+                        selector: LastSuccessful(),
+                        filter: 'out/..'
+                    )
+                }
+            }
+        }
+}

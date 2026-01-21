@@ -1,0 +1,22 @@
+pipeline {
+    agent any
+    stages {
+        stage('archive') {
+            bat 'mkdir artifacts'
+            archiveArtifacts: artifacts
+        }
+    }
+}
+
+pipeline {
+    agent any
+    stages {
+        stage('recieve') {
+            bat 'cd artifacts'
+            copyArtifacts(
+                projectName: 'jobOne',
+                filter: 'artifacts'
+            )
+        }
+    }
+}

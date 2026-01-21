@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+    stages {
+        stage ('Build') {
+            steps {
+                echo 'build'
+            }
+        }
+        stage ('Quality') {
+            parallel {
+                stage ('Unit') {
+                    steps {
+                        echo 'Unit'
+                    }
+                }
+                stage ('Lint') {
+                    steps {
+                        echo 'Lint'
+                    }
+                }
+            }
+        }
+        stage ('Deploy') {
+            when {
+                branch 'main'
+            }
+            steps {
+                echo 'deploy'
+            }
+        }
+    }
+    post {
+        always {
+            echo 'post always'
+        }
+    }
+}
