@@ -1,25 +1,41 @@
 pipeline {
     agent any
+    parameters {
+        BRANCH_PARAM (String, default main)
+    }
     stages {
-        stage('archive') {
+        stage('deploy') {
+            when {
+                branch: 'main'
+            }
             steps {
-                bat 'echo 'artefact' > out/app.txt'
-                archiveArtifacts archive: 'out/..'
+                echo '${params.BRANCH_PARAM}'
             }
         }
-    }
-}
-
-pipeline {
-    agent any
-    stages {
-            stage('unArchive') {
-                steps {
-                    copyArtefacts(
-                        selector: LastSuccessful(),
-                        filter: 'out/..'
-                    )
+        stage('quality') {
+            parallel {
+                stage('unit') {
+                    steps {
+                        echo 'unit'
+                    }
+                }
+                stage('lint') {
+                    steps {
+                         echo 'lint'
+                    }
                 }
             }
         }
+    }
+    post {
+        always {
+            echo 'alw'
+        }
+        success {
+            echo 'succ'
+        }
+        failure {
+            echo 'fail'
+        }
+    }
 }
